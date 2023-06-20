@@ -9,8 +9,10 @@ export default function Home() {
   return (
     <>
       
-      <Banner title='Filmes & Séries' description='Lista de filmes e séries baseada na API The Movie DB. 
-Confira as produções mais populares do mundo.' />
+      <Banner title='Filmes & Séries'>
+        <p>Lista de filmes e séries baseada na API The Movie DB. 
+Confira as produções mais populares do mundo.</p>
+      </Banner>
 
       <ContentHome>
         <Link to='/filmes'>

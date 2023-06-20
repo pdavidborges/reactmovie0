@@ -1,9 +1,11 @@
+import Banner from "../../components/Banner/Index";
+import { List } from "../../components/List/Index";
 
 export default function Series() {
 
   return (
-    <>
-     <h1>Series</h1>     
+    <>    
+    <List category="tv" title="Séries" />
     </>
   )
 
