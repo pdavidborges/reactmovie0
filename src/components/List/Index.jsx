@@ -1,57 +1,98 @@
 import { useEffect, useState } from "react";
 import api from '../../services/api';
 import Banner from "../../components/Banner/Index";
-import { ListCards, CardItem } from "./style";
+import { ListCards, CardItem, Loading } from "./style";
 import { Link } from "react-router-dom";
 import star from '../../img/star.svg';
+import noImage from '../../img/no-image.jpg';
 import axios from "axios";
 
 export function List({category, title}) {
 
   const [itens, setItens] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [typeList, setTypeList] = useState('top_rated');
+  const [search, setSearch] = useState('');
+
+  const handleSearch = (arg) => {
+    if(arg !== ''){
+      setSearch(arg);
+    }else{
+      setSearch('');  
+    }
+  }
+ 
+
+//  useEffect(() => {   
+//     axios.get(`https://api.themoviedb.org/3/search/${category}`, {
+//       params: {
+//         query: search,
+//         api_key: '93b872e765d2e0bc708fe8fd68ea2ad0',
+//         language: 'pt-BR',                
+//       }
+//     })
+
+//     .then(response => {
+//       //console.log(response.data.total_pages);      
+//       setItens(response.data.results);
+//       setLoading(false);
+//     })
+
+//     .catch(error => {
+//       console.log(error.message);
+//     })    
+
+//   }, [search])
 
   useEffect(() => {
-      //top_rated
-      //popular
-      //now_playing
-      //upcoming
     axios.get(`https://api.themoviedb.org/3/${category}/top_rated`, {
       params: {
-        api_key: '93b872e765d2e0bc708fe8fd68ea2ad0',
-        language: 'pt-BR',
         page: 1,
+        api_key: '93b872e765d2e0bc708fe8fd68ea2ad0',
+        language: 'pt-BR',                
       }
     })
 
     .then(response => {
-      console.log(response.data);
-      setItens(response.data.results.slice(0, 20));
+      //console.log(response.data.total_pages);
+      //console.log(search);
+      setItens(response.data.results.slice(0, 18));
       setLoading(false);
     })
 
     .catch(error => {
       console.log(error.message);
-    })
+    })    
     
+  },[])
 
-  }, [])
 
 
   if(loading){
     return(
-      <div>
+      <Loading>
         <h3 style={{color:'white'}}>Carregando...</h3>
-      </div>
+      </Loading>
     )
   }
 
   return (
     <>
-      <Banner title={title} />
-      <div className="container">
+      <Banner title={title}>          
+      </Banner>
+      <div className="container">      
+       
+        <ListCards>          
 
-        <ListCards>
+        {/* <select value={typeList} onChange={(e) => setTypeList(e.target.value)}>
+            <option value="top_rated">Tops</option>
+            <option value="popular">Populares</option>
+            {category === 'movie' ? <option value="now_playing">Do Momento</option> : '' }            
+        </select> */}
+
+        <input type="text" value={search} onChange={(e) => handleSearch(e.target.value)}/>
+
+          <main>
 
           {
             itens.map((item) => (
@@ -61,8 +102,20 @@ export function List({category, title}) {
                 {/* {console.log(JSON.stringify(item.first_air_date).substring(1,5))} */}
 
 
-                <Link to={`detalhe/${item.id}`}>
-                  <img src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`} title={item.title} width={360} />
+                <Link to={`../detalhes/${category}/${item.id}`}>
+                  
+                  
+                  {
+                    (item.backdrop_path ? 
+                    <img src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`} title={item.title} width={360}  />
+                    :
+                    <img src={noImage} alt="" width={360}  />
+                    )
+                    
+                  }
+            
+                  
+
                   <div className="content-card">
                     <h2>{ category === 'tv' ? item.name : item.title}</h2>
                     <h3>Ano: {JSON.stringify((category === 'tv' ? item.first_air_date : item.release_date)).substring(1,5)}</h3>
@@ -74,7 +127,7 @@ export function List({category, title}) {
 
             ))
           }
-
+          </main>
         </ListCards>
 
       </div>
