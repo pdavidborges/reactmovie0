@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import api from '../../services/api';
 import Banner from "../../components/Banner/Index";
 import { ListCards, CardItem, Loading } from "./style";
 import { Link } from "react-router-dom";
@@ -45,7 +44,7 @@ export function List({category, title}) {
 //   }, [search])
 
   useEffect(() => {
-    axios.get(`https://api.themoviedb.org/3/${category}/top_rated`, {
+    axios.get(`https://api.themoviedb.org/3/${category}/popular`, {
       params: {
         page: 1,
         api_key: '93b872e765d2e0bc708fe8fd68ea2ad0',
@@ -118,7 +117,9 @@ export function List({category, title}) {
 
                   <div className="content-card">
                     <h2>{ category === 'tv' ? item.name : item.title}</h2>
+
                     <h3>Ano: {JSON.stringify((category === 'tv' ? item.first_air_date : item.release_date)).substring(1,5)}</h3>
+                    
                     <span> <img src={star} alt="" /> {item.vote_average}</span>
                   </div>
                 </Link>
