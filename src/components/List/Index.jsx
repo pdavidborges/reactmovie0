@@ -74,7 +74,7 @@ export function List({category, title}) {
       console.log(error.message);
     })    
     
-  },[listStart])
+  },[])
 
 
   if(loading){
