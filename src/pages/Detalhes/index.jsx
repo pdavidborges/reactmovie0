@@ -40,7 +40,7 @@ export default function Detalhes() {
 
                     <img src={`https://image.tmdb.org/t/p/original${items.poster_path}`} alt="" width={360} />
                     <div>
-                        <h1>{items.title}</h1>
+                        <h1>{ category === 'tv' ? items.name : items.title}</h1>
                         <h2>{items.tagline}</h2>
                         <ul>                            
                             <li>Ano: {items.release_date}</li>
