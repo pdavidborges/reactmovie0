@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <FooterApp>
-      <p>Projeto desenvolvido por:a <a href="https://cotiinformatica.com.br"> Coti Informática</a></p>
+      <p>Projeto desenvolvido por: <a href="https://cotiinformatica.com.br"> Coti Informática</a></p>
     </FooterApp>
   )
 
