@@ -43,7 +43,7 @@ export default function Detalhes() {
                         <h1>{ category === 'tv' ? items.name : items.title}</h1>
                         <h2>{items.tagline}</h2>
                         <ul>                            
-                            <li>Ano: {items.release_date}</li>
+                            <li>Ano: {category === 'tv' ? items.first_air_date : items.release_date}</li>
                             <li>Avaliação: {(items.vote_average*10).toFixed(0)}%</li>
                         </ul>
                         <p><strong>Sinopse: </strong>{items.overview}</p>
