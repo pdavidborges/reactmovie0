@@ -48,7 +48,7 @@ export default function Detalhes() {
                         </ul>
                         <p><strong>Sinopse: </strong>{items.overview}</p>
 
-                        <button onClick={() => navigate(-1)}>go back</button>
+                        <button onClick={() => navigate(-1)}>Voltar</button>
 
                     </div>
             </Content>

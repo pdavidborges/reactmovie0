@@ -3,12 +3,9 @@ import styled from "styled-components";
 import backgroundImage from '../../img/no-image.jpg';
 
 export const ListCards = styled.div`
-
-
-
-  select, input{
-    width: 200px;
     
+  select, input{
+    width: 200px;    
     margin-top: 20px;
     border-radius: 5px;
     background-color: #000715;
@@ -19,10 +16,12 @@ export const ListCards = styled.div`
   }
 
   main{
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-  margin-top: 60px;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 60px;
+    justify-content: center;
+
   }
 
 `

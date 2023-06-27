@@ -12,38 +12,49 @@ export function List({category, title}) {
   const [loading, setLoading] = useState(true);
   const [typeList, setTypeList] = useState('top_rated');
   const [search, setSearch] = useState('');
+  const [listStart, setListStart] = useState(true);
+
+  // if(sessionStorage.getItem('search')){
+  //   setListStart(false);
+  //   setSearch(sessionStorage.getItem('search'))
+  // }
 
   const handleSearch = (arg) => {
     if(arg !== ''){
-      setSearch(arg);
+      setListStart(false);
+      setSearch(arg);        
+      sessionStorage.setItem('search',arg);   
     }else{
-      setSearch('');  
+      setSearch(''); 
+      setListStart(true);       
     }
   }
+
+ useEffect(() => {
+    console.log("componente renderizado busca");
+    axios.get(`https://api.themoviedb.org/3/search/${category}`, {
+      params: {
+        query: search,
+        api_key: '93b872e765d2e0bc708fe8fd68ea2ad0',
+        language: 'pt-BR',                
+      }
+    })
+
+    .then(response => {
+      //console.log(response.data.total_pages);      
+      setItens(response.data.results);
+      setLoading(false);
+    })
+
+    .catch(error => {
+      console.log(error.message);
+    })    
+
+  }, [search])
+
  
-
-//  useEffect(() => {   
-//     axios.get(`https://api.themoviedb.org/3/search/${category}`, {
-//       params: {
-//         query: search,
-//         api_key: '93b872e765d2e0bc708fe8fd68ea2ad0',
-//         language: 'pt-BR',                
-//       }
-//     })
-
-//     .then(response => {
-//       //console.log(response.data.total_pages);      
-//       setItens(response.data.results);
-//       setLoading(false);
-//     })
-
-//     .catch(error => {
-//       console.log(error.message);
-//     })    
-
-//   }, [search])
-
   useEffect(() => {
+    console.log("componente renderizado lista");
     axios.get(`https://api.themoviedb.org/3/${category}/popular`, {
       params: {
         page: 1,
@@ -55,16 +66,15 @@ export function List({category, title}) {
     .then(response => {
       //console.log(response.data.total_pages);
       //console.log(search);
-      setItens(response.data.results.slice(0, 18));
-      setLoading(false);
+      setItens(response.data.results);
+      setLoading(false);      
     })
 
     .catch(error => {
       console.log(error.message);
     })    
     
-  },[])
-
+  },[listStart])
 
 
   if(loading){
@@ -77,25 +87,26 @@ export function List({category, title}) {
 
   return (
     <>
-      <Banner title={title}>          
+      <Banner title={title}>   
+      <input type="text" value={search} onChange={(e) => handleSearch(e.target.value)} placeholder="Digite para pesquisar"/>       
       </Banner>
       <div className="container">      
        
         <ListCards>          
-
+          {console.log(listStart)}
         {/* <select value={typeList} onChange={(e) => setTypeList(e.target.value)}>
             <option value="top_rated">Tops</option>
             <option value="popular">Populares</option>
             {category === 'movie' ? <option value="now_playing">Do Momento</option> : '' }            
         </select> */}
 
-        <input type="text" value={search} onChange={(e) => handleSearch(e.target.value)}/>
+        
 
           <main>
 
           {
             itens.map((item) => (
-
+              
               <CardItem key={item.id}>             
 
                 {/* {console.log(JSON.stringify(item.first_air_date).substring(1,5))} */}

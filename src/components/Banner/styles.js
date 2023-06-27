@@ -22,5 +22,28 @@ background-image: url(${background});
     max-width: 460px;
   }
 
+  input{
+    width: 200px;    
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: #000715;
+    border-color: #00B1E9;
+    color: white;
+    padding: 10px;
+  }
+
+  @media (max-width: 640px){
+    padding: 75px 0;
+
+    h1{
+      font-size: 36px;
+    }
+
+    p{
+      font-size: 14px;
+    }
+
+  }
+
 `
 

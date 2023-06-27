@@ -17,4 +17,11 @@ export const ContentHome = styled.div `
 
   }
 
+  @media (max-width: 640px){
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+    padding: 0 15px;
+  }
+
 `

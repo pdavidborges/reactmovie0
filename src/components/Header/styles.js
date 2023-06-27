@@ -24,5 +24,10 @@ background-color: #000715;
 
   }
 
+  @media (max-width: 640px){
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
 `
 
